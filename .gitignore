@@ -1,0 +1,28 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Node.js dependencies
+/node_modules
+
+# Compiled files
+/build
+/dist
+
+# Environment variables
+.env
+
+# Logs and debugging
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+debug.log
+
+# Editor files
+.vscode
+.idea
+
+# OS-specific files
+Thumbs.db
+Desktop.ini
