@@ -1,0 +1,1 @@
+# gparency-child-theme
