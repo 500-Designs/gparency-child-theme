@@ -162,3 +162,7 @@ add_action( 'admin_head', 'my_theme_add_admin_styles' );
 /* ADD CUSTOM FUNCTIONS BELOW THIS LINE */
 /* ADD CUSTOM FUNCTIONS BELOW THIS LINE */
 
+// require_once get_stylesheet_directory() . '/post-types/events_post_type.php';
+// require_once get_stylesheet_directory() . '/post-types/glossary_post_type.php';
+require_once get_stylesheet_directory() . '/includes/get-deals.php';
+require_once get_stylesheet_directory() . '/includes/get-people.php';
