@@ -163,3 +163,4 @@ add_action( 'admin_head', 'my_theme_add_admin_styles' );
 require_once get_stylesheet_directory() . '/includes/get-deals.php';
 require_once get_stylesheet_directory() . '/includes/get-people.php';
 require_once get_stylesheet_directory() . '/includes/autofill-zoho-popup.php';
+require_once get_stylesheet_directory() . '/includes/resources-filters.php';

@@ -26,7 +26,7 @@ function gparency_get_deals( $request ) {
 }
 
 add_action( 'rest_api_init', function () {
-    register_rest_route( 'gparency/v1', '/deals', array(
+    register_rest_route( 'jetengine/v1', '/deals', array(
         'methods' => 'GET',
         'callback' => 'gparency_get_deals',
     ));

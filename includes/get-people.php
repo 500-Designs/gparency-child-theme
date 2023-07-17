@@ -24,7 +24,7 @@ function gparency_get_people( $request ) {
 }
 
 add_action( 'rest_api_init', function () {
-    register_rest_route( 'gparency/v1', '/people', array(
+    register_rest_route( 'jetengine/v1', '/people', array(
         'methods' => 'GET',
         'callback' => 'gparency_get_people',
     ));
@@ -62,7 +62,7 @@ function gparency_get_single_people( $request ) {
 }
 
 add_action( 'rest_api_init', function () {
-    register_rest_route( 'gparency/v1', '/people/(?P<id>\d+)', array(
+    register_rest_route( 'jetengine/v1', '/people/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'gparency_get_single_people',
     ));
