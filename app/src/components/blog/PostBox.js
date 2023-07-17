@@ -49,16 +49,18 @@ const PostBox = ({
           <span>No post image found</span>
         )}
       </div>
-      <div className="categories">
-        {postCategories.map((categoryId, i) => {
-          if (categoryId === 1) return false;
-          return (
-            <span key={categoryId} data-id={categoryId}>
-              {getCategoryName(categoryId)}
-            </span>
-          );
-        })}
-      </div>
+      {(postCategories.length > 0) && (
+        <div className="categories">
+          {postCategories.map((categoryId, i) => {
+            // if (categoryId === 1) return false;
+            return (
+              <span key={categoryId} data-id={categoryId}>
+                {getCategoryName(categoryId)}
+              </span>
+            );
+          })}
+        </div>
+      )}
 
       <h3>
         <a href={postLink} target="_blank" rel="noopener noreferrer">
