@@ -1,8 +1,8 @@
 import React, { createContext, useState } from "react";
 import TabsNav from "./tabs/TabsNav";
-import Blog from "./tabs/Blog";
-import Events from "./tabs/Events";
-import Glossary from "./tabs/Glossary";
+import Blog from "./blog/Blog";
+import Events from "./events/Events";
+import Glossary from "./glossary/Glossary";
 import styles from "./ResourcesTabs.module.css";
 
 // Create a new context for the currentTab state

@@ -1,0 +1,19 @@
+@import '../../styles/colors.scss';
+
+#Blog {
+    .container {
+      padding: 26px 0;
+    }
+    
+    .content {
+      font-size: 20px;
+    }
+
+    .categories-list {
+      display: flex;
+      gap: 16px;
+      button {
+        background: $grey;
+      }
+    }
+}
