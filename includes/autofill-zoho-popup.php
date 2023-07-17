@@ -30,7 +30,7 @@ function autofill_zoho_popup_shortcode($atts) {
     // Render the HTML for the shortcode
     $html = '<form id="autoFillZohoEmailForm">
                 <label for="emailInput" style="display: none";>Email:</label>
-                <input type="email" id="emailInput" name="email" required>
+                <input type="email" id="emailInput" name="email" required placeholder="Enter your email">
                 <button type="submit" id="submitButton">' . esc_html($button_text) . '</button>
             </form>
             ';

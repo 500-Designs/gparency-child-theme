@@ -14,7 +14,8 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    submitButton.addEventListener("click", function () {
+    submitButton.addEventListener("click", function (e) {
+        e.preventDefault();
         if (emailInput.checkValidity()) {
             modal.style.display = "block";
             showForm();
