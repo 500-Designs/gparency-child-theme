@@ -12,13 +12,25 @@ const PostSearch = ({ onSearch }) => {
         onSearch(debouncedSearchValue);
     }, [debouncedSearchValue, onSearch]);
 
+    const handleInputChange = (e) => {
+        setSearchValue(e.target.value);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            onSearch(e.target.value);
+        }
+    };
+
     return (
-        <div id='PostSearch'>
+        <div id="PostSearch">
             <SearchIcon />
             <input
                 type="text"
                 value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
                 placeholder="Search"
             />
         </div>

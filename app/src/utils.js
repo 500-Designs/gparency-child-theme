@@ -36,6 +36,7 @@ export function useDebounce(value, delay) {
             setDebouncedValue(value);
         }, delay);
 
+        // Return the cleanup function
         return () => {
             clearTimeout(handler);
         };

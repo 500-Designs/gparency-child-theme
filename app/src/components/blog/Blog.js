@@ -18,12 +18,6 @@ const Blog = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        getPosts();
-        getCategories();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentPage, currentCategory, searchQuery]);
-
     const getPosts = async () => {
         try {
             setIsLoading(true);
@@ -32,8 +26,6 @@ const Blog = () => {
 
             if (searchQuery !== '') {
                 url += `search=${searchQuery}&`;
-                setCurrentPage(1);
-                setCurrentCategory(null);
             }
 
             if (currentCategory && currentCategory.id !== 0) {
@@ -55,7 +47,15 @@ const Blog = () => {
         }
     };
 
+    useEffect(() => {
+        getPosts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentPage]);
 
+    useEffect(() => {
+        getPosts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchQuery, currentCategory]);
 
     const getCategories = async () => {
         try {
@@ -68,32 +68,43 @@ const Blog = () => {
         }
     };
 
-    const getCategory = async (categoryId) => {
-        setCurrentCategory(categoryId === 0 ? null : categories.find((category) => category.id === categoryId));
-        setCurrentPage(1);
+    const handleSearch = query => {
+        setSearchQuery(query);
     };
+
+    const handleCategoryChange = categoryId => {
+        const category = categoryId === 0 ? null : categories.find((category) => category.id === categoryId);
+        setCurrentCategory(category);
+    };
+
+    // useEffect to watch for changes in currentCategory
+    useEffect(() => {
+        if (currentCategory === null) {
+            setSearchQuery('');
+        }
+    }, [currentCategory]); // Re-run when currentCategory changes
+
+    useEffect(() => {
+        getCategories();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <CategoriesProvider>
             <div id="Blog" className={isLoading ? 'loading' : ''}>
                 <div className='filters'>
-                    <CategoriesList categories={categories} getCategory={getCategory} 
-                    currentCategory={currentCategory ? currentCategory.id : 1}/>
-                    <PostSearch onSearch={setSearchQuery} />
+                    <CategoriesList categories={categories} getCategory={handleCategoryChange}
+                        currentCategory={currentCategory ? currentCategory.id : 1} />
+                    <PostSearch onSearch={handleSearch} />
                 </div>
-
 
                 {isLoading
                     ? <Loader />
                     :
                     <>
-
-
                         <PostsGrid posts={posts} categories={categories} />
-
                         <PostsPagination currentPage={currentPage} pageCount={pageCount} onPageChange={setCurrentPage} />
                     </>
-
                 }
             </div>
         </CategoriesProvider>

@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './PostsGrid.scss';
 import parse from 'html-react-parser';
 import PostBox from './PostBox';
 
 const PostsGrid = ({ posts, searchQuery, categories }) => {
-  if (posts.length === 0) {
+  if (!Array.isArray(posts) || posts.length === 0) {
     const emptyMessage = searchQuery
-      ? `No posts found for ${searchQuery}`
+      ? `No posts found for "${searchQuery}"`
       : 'No posts found';
 
     return (
@@ -19,21 +20,37 @@ const PostsGrid = ({ posts, searchQuery, categories }) => {
   return (
     <div id="PostsGrid">
       <div className="grid-container">
-        {posts.map((post) => (
-          <PostBox
-            key={post.id}
-            postId={post.id}
-            postDate={post.date}
-            postTitle={parse(post.title.rendered)}
-            featuredMedia={post.featured_media}
-            postLink={post.link}
-            postCategories={post.categories}
-            categories={categories}
-          />
-        ))}
+        {posts.map((post) => {
+          const { id, date, title, featured_media, link, categories: postCategories } = post;
+
+          // Ensure necessary post properties are available
+          if (!id || !date || !title || !link) {
+            console.error('Invalid post object', post);
+            return null;
+          }
+
+          return (
+            <PostBox
+              key={id}
+              postId={id}
+              postDate={date}
+              postTitle={parse(title.rendered)}
+              featuredMedia={featured_media}
+              postLink={link}
+              postCategories={postCategories}
+              categories={categories}
+            />
+          );
+        })}
       </div>
     </div>
   );
+};
+
+PostsGrid.propTypes = {
+  posts: PropTypes.array.isRequired,
+  searchQuery: PropTypes.string,
+  categories: PropTypes.array.isRequired,
 };
 
 export default PostsGrid;
