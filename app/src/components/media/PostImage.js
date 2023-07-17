@@ -5,6 +5,7 @@ const PostImage = ({ mediaId }) => {
   const [mediaDetails, setMediaDetails] = useState(null);
   const wpUrl = useWpSiteUrl();
 
+  console.log("mediaId: ", mediaId);
   useEffect(() => {
     const fetchMediaDetails = async () => {
       try {
@@ -35,7 +36,7 @@ const PostImage = ({ mediaId }) => {
 
   // Generate the <source> tags for different image sizes
   const sourceTags = imageSizes.map(({ size, width }) => (
-    media_details.sizes[size] && <source
+    media_details?.sizes?.[size] && <source
       key={size}
       media={`(min-width: ${width}px)`}
       srcSet={`${media_details.sizes[size].source_url} ${size}`}
@@ -47,10 +48,11 @@ const PostImage = ({ mediaId }) => {
     <img
       src={source_url}
       alt="Post Media"
-      width={media_details.width}
-      height={media_details.height}
+      width={media_details?.width}
+      height={media_details?.height}
     />
   );
+
 
   return (
     <picture>
