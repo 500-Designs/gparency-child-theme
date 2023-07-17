@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { CurrentTabContext } from '../ResourcesTabs';
-import styles from './TabsNav.module.css';
+import './TabsNav.scss';
 
 // Define the TabsNav component
 const TabsNav = () => {
@@ -11,23 +11,23 @@ const TabsNav = () => {
   };
 
   return (
-    <div className={styles.tabsContainer}>
+    <div id="TabsNav">
       <button
-        className={`${styles.tabButton} ${currentTab === 'blog' ? styles.active : ''}`}
+        className={`${currentTab === 'blog' ? 'active' : ''}`}
         onClick={() => handleTabChange('blog')}
         disabled={currentTab === 'blog'}
       >
         Blog
       </button>
       <button
-        className={`${styles.tabButton} ${currentTab === 'events' ? styles.active : ''}`}
+        className={`${currentTab === 'events' ? 'active' : ''}`}
         onClick={() => handleTabChange('events')}
         disabled={currentTab === 'events'}
       >
         Events
       </button>
       <button
-        className={`${styles.tabButton} ${currentTab === 'glossary' ? styles.active : ''}`}
+        className={`${currentTab === 'glossary' ? 'active' : ''}`}
         onClick={() => handleTabChange('glossary')}
         disabled={currentTab === 'glossary'}
       >

@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import ResourcesTabs from './components/ResourcesTabs';
 
 function App() {

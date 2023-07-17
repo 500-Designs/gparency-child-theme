@@ -23,7 +23,7 @@ function resources_filter_shortcode($atts) {
         wp_enqueue_script('resources-app-js', $child_theme_uri . '/app/build' . $js_file, array(), false, true);
     }
 
-    $html = '<div id="resourcesAppRoot">#resourcesAppRoot</div>';
+    $html = '<div id="root"></div>';
 
     return $html;
 }
