@@ -1,0 +1,20 @@
+@import "../../styles/colors.scss";
+
+
+#PostSearch {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid $neutralGray;
+  border-radius: 8px;
+  input {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    outline: none;
+    border: none;
+    &:placeholder {
+        color: $darkGray;
+    }
+  }
+}

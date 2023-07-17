@@ -1,24 +1,23 @@
-
+@import "../../styles/colors.scss";
+@import "../../styles/mixins.scss";
 
 #TabsNav {
-  .tabsContainer {
-    color: pink;
-    display: flex;
-  }
+  margin: 36px 0;
+  border-bottom: 2px solid $gray2;
+  display: flex;
+  gap: 0;
   button {
+    display: block;
     color: #03363d;
     font-weight: 500;
+    margin-bottom: -2px;
     border: none;
     background-color: transparent;
     cursor: pointer;
-    padding: 10px;
-    margin-right: 10px;
-    border-bottom: 5px solid transparent;
+    padding: 10px 40px 13px;
+    @include hover-bottom-border;
     &.active {
-      border-bottom: 5px solid #22e2b5;
-    }
-    &:hover {
-      border-bottom: 5px solid #22e2b5;
+      box-shadow: inset 0 -5px 0 $brandGreen;
     }
   }
 }

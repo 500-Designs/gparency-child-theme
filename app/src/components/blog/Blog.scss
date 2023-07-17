@@ -1,19 +1,29 @@
-@import '../../styles/colors.scss';
+@import "../../styles/colors.scss";
+@import "../../styles/mixins.scss";
 
 #Blog {
-    .container {
-      padding: 26px 0;
-    }
-    
-    .content {
-      font-size: 20px;
-    }
+  .content {
+    font-size: 20px;
+  }
 
-    .categories-list {
-      display: flex;
-      gap: 16px;
-      button {
-        background: $grey;
-      }
+  .categories-list {
+    display: flex;
+    gap: 8px 16px;
+    flex-wrap: wrap;
+    button {
+      @include button-styles;
     }
+  }
+  .filters {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 30px;
+    @media (max-width: 1024px) {
+      flex-direction: column;
+    }
+    @media (max-width: 768px) {
+
+    }
+  }
 }

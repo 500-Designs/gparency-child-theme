@@ -1,32 +1,41 @@
 @import "../../styles/colors.scss";
+@import "../../styles/mixins.scss";
 
-#PostsGrid {
-  margin: 30px auto;
-  .container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 33px;
-
-    @media (max-width: 767px) {
-      grid-template-columns: 1fr;
-    }
-
-    @media (min-width: 768px) and (max-width: 991px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  .post {
-    padding: 25px;
-    border: 1px solid $grey2;
-  }
+#PostsGrid .PostBox {
+  padding: 25px;
+  border: 1px solid $gray2;
+  border-radius: 32px;
 
   .categories {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
     span {
-      font-size: 10px;
+      @include button-styles;
     }
+  }
+  .image {
+    min-height: 244px;
+    width: 100%;
+    border-radius: 23px;
+    border: 1px solid $neutralGray;
+  }
+  
+  h3,
+  h3 a {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    color: $lightHeading;
+    text-decoration: none;
+    letter-spacing: -0.8px;
+    line-height: normal;
+  }
+  .meta {
+    display: flex;
+    gap: 30px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    color: $lightBody;
   }
 }

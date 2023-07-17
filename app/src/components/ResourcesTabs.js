@@ -1,19 +1,24 @@
-import React, { createContext, useState } from "react";
+import React, { createContext } from "react";
 import TabsNav from "./tabs/TabsNav";
 import Blog from "./blog/Blog";
 import Events from "./events/Events";
 import Glossary from "./glossary/Glossary";
 import styles from "./ResourcesTabs.module.css";
+import { useUrlSubfolder } from '../utils';
 
 // Create a new context for the currentTab state
 const CurrentTabContext = createContext();
 
 // Define the ResourcesTabs component
 const ResourcesTabs = () => {
-  const [currentTab, setCurrentTab] = useState("blog");
+  const { subfolder, updateSubfolder } = useUrlSubfolder();
+
+  const handleTabChange = (newTab) => {
+    updateSubfolder(newTab);
+  };
 
   let currentTabContent;
-  switch (currentTab) {
+  switch (subfolder) {
     case "blog":
       currentTabContent = <Blog />;
       break;
@@ -28,9 +33,9 @@ const ResourcesTabs = () => {
   }
 
   return (
-    <CurrentTabContext.Provider value={{ currentTab, setCurrentTab }}>
+    <CurrentTabContext.Provider value={{ currentTab: subfolder, setCurrentTab: updateSubfolder }}>
       <div className={styles.resourcesTabs}>
-        <TabsNav />
+        <TabsNav currentTab={subfolder} handleTabChange={handleTabChange} />
         {currentTabContent}
       </div>
     </CurrentTabContext.Provider>

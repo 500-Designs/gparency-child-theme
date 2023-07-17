@@ -22,7 +22,10 @@ const PostsGrid = ({ posts, searchQuery, categories }) => {
         {posts.map((post) => (
           <PostBox
             key={post.id}
+            postId={post.id}
+            postDate={post.date}
             postTitle={parse(post.title.rendered)}
+            featuredMedia={post.featured_media}
             postLink={post.link}
             postCategories={post.categories}
             categories={categories}

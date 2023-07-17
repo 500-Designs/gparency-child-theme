@@ -4,6 +4,7 @@ import PostsPagination from '../tabs/PostsPagination';
 import { useWpSiteUrl } from '../../utils';
 import CategoriesList from './CategoriesList';
 import PostSearch from '../tabs/PostSearch';
+import Loader from '../tabs/Loader';
 import PostsGrid from './PostsGrid';
 import { CategoriesProvider } from '../../context/CategoriesContext';
 
@@ -15,6 +16,7 @@ const Blog = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [pageCount, setPageCount] = useState(1);
     const [searchQuery, setSearchQuery] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         getPosts();
@@ -24,6 +26,8 @@ const Blog = () => {
 
     const getPosts = async () => {
         try {
+            setIsLoading(true);
+
             let url = `${wpUrl}/wp/v2/posts?`;
 
             if (searchQuery !== '') {
@@ -45,6 +49,8 @@ const Blog = () => {
             setPageCount(Number(totalPages));
         } catch (error) {
             console.error('Error:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -68,13 +74,26 @@ const Blog = () => {
 
     return (
         <CategoriesProvider>
-            <div id="Blog">
-                <PostSearch onSearch={setSearchQuery} />
-                <CategoriesList categories={categories} getCategory={getCategory} />
+            <div id="Blog" className={isLoading ? 'loading' : ''}>
+                <div className='filters'>
+                    <CategoriesList categories={categories} getCategory={getCategory} 
+                    currentCategory={currentCategory ? currentCategory.id : 1}/>
+                    <PostSearch onSearch={setSearchQuery} />
+                </div>
 
-                <PostsGrid posts={posts} categories={categories} />
 
-                <PostsPagination currentPage={currentPage} pageCount={pageCount} onPageChange={setCurrentPage} />
+                {isLoading
+                    ? <Loader />
+                    :
+                    <>
+
+
+                        <PostsGrid posts={posts} categories={categories} />
+
+                        <PostsPagination currentPage={currentPage} pageCount={pageCount} onPageChange={setCurrentPage} />
+                    </>
+
+                }
             </div>
         </CategoriesProvider>
     );
