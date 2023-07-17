@@ -163,3 +163,4 @@ require_once get_stylesheet_directory() . '/includes/get-people.php';
 require_once get_stylesheet_directory() . '/includes/autofill-zoho-popup.php';
 require_once get_stylesheet_directory() . '/includes/resources-filters.php';
 require_once get_stylesheet_directory() . '/includes/get-reading-time.php';
+require_once get_stylesheet_directory() . '/includes/get-post-first-image.php';

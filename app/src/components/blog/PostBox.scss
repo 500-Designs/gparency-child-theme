@@ -5,6 +5,10 @@
   padding: 25px;
   border: 1px solid $gray2;
   border-radius: 32px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 
   .categories {
     display: flex;
@@ -14,12 +18,26 @@
     }
   }
   .image {
-    min-height: 244px;
+    height: 244px;
     width: 100%;
     border-radius: 23px;
     border: 1px solid $neutralGray;
+    overflow: hidden;
+    picture {
+      width: 100%;
+      height: 100%;
+      display: block;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
   }
-  
+  h3 {
+    margin: 0;
+  }
   h3,
   h3 a {
     font-size: 20px;
@@ -32,7 +50,7 @@
   }
   .meta {
     display: flex;
-    gap: 30px;
+    gap: 20px;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

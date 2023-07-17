@@ -2,10 +2,10 @@
 
 #PostsGrid {
   margin: 30px auto;
-  .container {
+  .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 33px;
+    grid-template-columns: repeat(3, 1fr); /* Example grid columns: 3 equal-width columns */
+    grid-gap: 10px;
 
     @media (max-width: 767px) {
       grid-template-columns: 1fr;

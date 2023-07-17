@@ -18,7 +18,7 @@ const PostsGrid = ({ posts, searchQuery, categories }) => {
 
   return (
     <div id="PostsGrid">
-      <div className="container">
+      <div className="grid-container">
         {posts.map((post) => (
           <PostBox
             key={post.id}

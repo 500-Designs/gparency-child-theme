@@ -41,6 +41,7 @@ const Blog = () => {
             }
 
             url += `page=${currentPage}`;
+            url += `&per_page=9`;
 
             const response = await fetch(url);
             const data = await response.json();
