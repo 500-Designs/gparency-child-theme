@@ -7,8 +7,23 @@
   position: relative;
   z-index: 3;
   margin: 20px auto 0 0;
+
 }
 
+@media (max-width: 480px) {
+    #autoFillZohoEmailForm {
+        max-width: calc(100vw - 60px);
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    #autoFillZohoEmailForm input {
+        width: 100%;
+        max-width: none;
+    }
+    #autoFillZohoEmailForm button {
+        max-width: none;
+    }
+}
 #autoFillZohoEmailForm input {
   border: 1px solid #e3e3e3;
   border-radius: 8px;

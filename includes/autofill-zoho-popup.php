@@ -25,10 +25,12 @@ function enqueue_autofill_zoho_script() {
 
 function autofill_zoho_popup_shortcode() {
     // Render the HTML for the shortcode
-    $html = '<div id="autoFillZohoEmailForm">';
-    $html .= '<input type="email" id="emailInput" name="email" placeholder="Enter your email" required>';
-    $html .= '<button id="submitButton" disabled>Get Started</button>';
-    $html .= '</div>';
+    $html = '<form id="autoFillZohoEmailForm">
+                <label for="emailInput" style="display: none";>Email:</label>
+                <input type="email" id="emailInput" name="email" required>
+                <button type="submit" id="submitButton">Get Started</button>
+            </form>
+            ';
 
     // pop-up code
     $html .= '

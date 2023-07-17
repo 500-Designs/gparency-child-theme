@@ -1,5 +1,4 @@
 jQuery(document).ready(function ($) {
-    console.log("init autofill zoho.asdasdd..");
 
     var emailInput = document.getElementById("emailInput");
     var submitButton = document.getElementById("submitButton");
