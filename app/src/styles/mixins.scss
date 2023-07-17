@@ -23,6 +23,7 @@
 }
 
 @mixin hover-bottom-border {
+  border-radius: 0;
   &:not([disabled]) {
     &:hover,
     &.active {

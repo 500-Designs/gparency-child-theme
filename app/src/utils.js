@@ -53,3 +53,29 @@ export function formatDate(dateString) {
     });
     return formatted;
 }
+
+export const useGetPostFirstImage = (postId) => {
+    const [imageId, setImageId] = useState(null);
+    const wpUrl = useWpSiteUrl();
+
+    useEffect(() => {
+        const fetchFirstImage = async () => {
+            try {
+                const response = await fetch(`${wpUrl}/custom/v1/first-image/${postId}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    setImageId(data.image_id || null);
+                } else {
+                    console.error(data.message || 'Failed to fetch first image.');
+                }
+            } catch (error) {
+                console.error('An error occurred while fetching the first image:', error);
+            }
+        };
+
+        fetchFirstImage();
+    }, [postId, wpUrl]);
+
+    return imageId;
+};

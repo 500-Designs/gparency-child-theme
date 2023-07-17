@@ -20,4 +20,10 @@
       box-shadow: inset 0 -5px 0 $brandGreen;
     }
   }
+  @media (max-width:767px) {
+    margin: 24px 0;
+    button {
+      padding: 10px 16px 13px;
+    }
+  }
 }

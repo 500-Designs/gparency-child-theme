@@ -19,7 +19,7 @@ const PostSearch = ({ onSearch }) => {
                 type="text"
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
-                placeholder="Search posts..."
+                placeholder="Search"
             />
         </div>
     );

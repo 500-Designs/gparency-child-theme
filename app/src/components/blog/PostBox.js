@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import "./PostBox.scss";
 import PostImage from "../media/PostImage";
 
-import { useWpSiteUrl, formatDate } from "../../utils";
+import { useWpSiteUrl, formatDate, useGetPostFirstImage } from "../../utils";
 
 const PostBox = ({
   postId,
-
   postDate,
   postTitle,
   featuredMedia,
@@ -15,6 +14,7 @@ const PostBox = ({
   categories,
 }) => {
   const wpUrl = useWpSiteUrl();
+  const firstPostImage = useGetPostFirstImage(postId);
 
   const [readingTime, setReadingTime] = useState("");
 
@@ -38,15 +38,15 @@ const PostBox = ({
     fetchReadingTime();
   }, [postId, wpUrl]);
 
-  console.log("featuredMedia: ", featuredMedia);
   return (
     <div className="PostBox" data-post-id={postId}>
       <div className="image">
         {featuredMedia > 0 ? (
           <PostImage mediaId={featuredMedia} />
+        ) : firstPostImage ? (
+          <PostImage mediaId={firstPostImage} />
         ) : (
-          // ? <span>featuredMedia: {featuredMedia}</span>
-          <span>NO featured image</span>
+          <span>No post image found</span>
         )}
       </div>
       <div className="categories">
@@ -69,11 +69,11 @@ const PostBox = ({
         <span className="date">{formatDate(postDate)}</span>
         {readingTime && (
           <>
-            |<div dangerouslySetInnerHTML={{ __html: readingTime }}></div>
+            <span>|</span><div dangerouslySetInnerHTML={{ __html: readingTime }}></div>
           </>
         )}
       </div>
-    </div>
+    </div >
   );
 };
 

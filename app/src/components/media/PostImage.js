@@ -23,27 +23,26 @@ const PostImage = ({ mediaId }) => {
         return null; // or show a placeholder/loading state
     }
 
-    const { source_url } = mediaDetails;
+    const { source_url, media_details } = mediaDetails;
 
-    const sourceTags = [
-        <source
-            key="768"
-            srcSet={`${source_url.replace('.jpg', '-768x1024.jpg')}, ${source_url.replace('.jpg', '-768x1024.jpg.webp')} 1x, ${source_url.replace('.jpg', '-1152x1536.jpg')}, ${source_url.replace('.jpg', '-1152x1536.jpg.webp')} 2x`}
-            media="(min-width: 768px) and (max-width: 1199px)"
-            type="image/webp"
-        />,
-        <source
-            key="1200"
-            srcSet={`${source_url.replace('.jpg', '-450x600.jpg')}, ${source_url.replace('.jpg', '-450x600.jpg.webp')} 1x, ${source_url.replace('.jpg', '-768x1024.jpg')}, ${source_url.replace('.jpg', '-768x1024.jpg.webp')} 2x`}
-            media="(min-width: 1200px)"
-            type="image/webp"
-        />,
-    ];
+    // Get the available image sizes from media_details.sizes object
+    const availableSizes = Object.keys(media_details.sizes);
 
+    // Generate the source tags dynamically based on available sizes
+    const sourceTags = availableSizes.map((size) => (
+        <source
+            key={size}
+            srcSet={`${media_details.sizes[size].source_url} ${media_details.sizes[size].width}w`}
+            media={`(min-width: ${media_details.sizes[size].width}px)`}
+            type="image/jpeg"
+        />
+    ));
+
+    // Generate the img tag dynamically using the original source_url
     const imgTag = (
         <img
-            src={`${source_url.replace('.jpg', '-250x250.jpg')}`}
-            srcSet={`${source_url.replace('.jpg', '-250x250.jpg.webp')} 1x, ${source_url.replace('.jpg', '-450x600.jpg')}, ${source_url.replace('.jpg', '-450x600.jpg.webp')} 2x`}
+            src={source_url}
+            srcSet={`${source_url} ${media_details.width}w`}
             alt="flamingo"
         />
     );

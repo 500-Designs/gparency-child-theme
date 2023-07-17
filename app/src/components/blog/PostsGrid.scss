@@ -1,11 +1,12 @@
 @import "../../styles/colors.scss";
 
 #PostsGrid {
-  margin: 30px auto;
+  margin: 64px auto;
   .grid-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Example grid columns: 3 equal-width columns */
-    grid-gap: 10px;
+    grid-gap: 30px;
+    justify-content: center;
 
     @media (max-width: 767px) {
       grid-template-columns: 1fr;
@@ -31,5 +32,8 @@
         display: flex;
         gap: 10px;
     }
+  }
+  @media (max-width: 768px) {
+    margin: 24px auto;
   }
 }

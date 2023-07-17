@@ -2,10 +2,10 @@
 @import "../../styles/mixins.scss";
 
 #PostsGrid .PostBox {
-  padding: 25px;
+  padding: 24px;
   border: 1px solid $gray2;
   border-radius: 32px;
-  max-width: 300px;
+  /* max-width: 300px; */
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -23,6 +23,9 @@
     border-radius: 23px;
     border: 1px solid $neutralGray;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     picture {
       width: 100%;
       height: 100%;
@@ -55,5 +58,9 @@
     font-style: normal;
     font-weight: 400;
     color: $lightBody;
+    margin: auto 0 0 0;
+    & > span:not(.date) {
+      color: $neutralGray;
+    }
   }
 }

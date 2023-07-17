@@ -4,9 +4,17 @@
 #PostSearch {
   display: flex;
   gap: 8px;
-  padding: 8px;
+  padding: 13px 16px;
   border: 1px solid $neutralGray;
   border-radius: 8px;
+  width: 100%;
+  max-width: 255px;
+  max-height: 54px;
+  align-items: center;
+  svg {
+    width: 24px;
+    height: 24px;
+  }
   input {
     font-size: 16px;
     font-style: normal;
@@ -16,5 +24,8 @@
     &:placeholder {
         color: $darkGray;
     }
+  }
+  @media (max-width: 768px) {
+    max-width: 100%;
   }
 }

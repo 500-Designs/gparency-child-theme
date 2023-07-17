@@ -22,6 +22,65 @@ const PostsPagination = ({ currentPage, pageCount, onPageChange }) => {
         };
     }, []);
 
+    const renderPageButtons = () => {
+        let buttons = [];
+
+        if (pageCount <= 5) {
+            for (let i = 1; i <= pageCount; i++) {
+                buttons.push(<button
+                    key={i}
+                    onClick={() => handlePageChange(i)}
+                    disabled={currentPage === i}
+                >
+                    {i}
+                </button>);
+            }
+        } else {
+            buttons.push(<button
+                key={1}
+                onClick={() => handlePageChange(1)}
+                disabled={currentPage === 1}
+            >
+                {1}
+            </button>);
+            buttons.push(<button
+                key={2}
+                onClick={() => handlePageChange(2)}
+                disabled={currentPage === 2}
+            >
+                {2}
+            </button>);
+
+            if (currentPage > 3) {
+                buttons.push(<button key='before-ellipsis' disabled>...</button>);
+            }
+
+            if (currentPage > 2 && currentPage < pageCount - 1) {
+                buttons.push(<button
+                    key={currentPage}
+                    onClick={() => handlePageChange(currentPage)}
+                    disabled
+                >
+                    {currentPage}
+                </button>);
+            }
+
+            if (currentPage < pageCount - 2) {
+                buttons.push(<button key='after-ellipsis' disabled>...</button>);
+            }
+
+            buttons.push(<button
+                key={pageCount}
+                onClick={() => handlePageChange(pageCount)}
+                disabled={currentPage === pageCount}
+            >
+                {pageCount}
+            </button>);
+        }
+
+        return buttons;
+    };
+
     return (
         <div id="PostsPagination">
             {currentPage > 1 && (
@@ -30,15 +89,7 @@ const PostsPagination = ({ currentPage, pageCount, onPageChange }) => {
                 </button>
             )}
             <div className="items">
-                {Array.from({ length: pageCount }, (_, index) => (
-                    <button
-                        key={index + 1}
-                        onClick={() => handlePageChange(index + 1)}
-                        disabled={currentPage === index + 1}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
+                {renderPageButtons()}
             </div>
             {currentPage < pageCount && (
                 <button onClick={() => handlePageChange(currentPage + 1)} className='next'>
