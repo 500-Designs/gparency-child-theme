@@ -1,7 +1,20 @@
 <?php
 
 function enqueue_autofill_zoho_assets() {
+    $shortcode_exists = false;
+
+    // Check if shortcode exists in post content
     if (has_shortcode(get_post()->post_content, 'autofill-zoho-popup')) {
+        $shortcode_exists = true;
+    }
+
+    // Check if current page is an archive page and Elementor is active
+    if (is_archive() && class_exists('Elementor\Plugin')) {
+        $elementor = Elementor\Plugin::instance();
+        $shortcode_exists = true;
+    }
+
+    if ($shortcode_exists) {
         wp_enqueue_style(
             'autofill-zoho-styles',
             get_stylesheet_directory_uri() . '/autofill-zoho.css'
@@ -12,6 +25,8 @@ function enqueue_autofill_zoho_assets() {
     }
 }
 add_action('wp_enqueue_scripts', 'enqueue_autofill_zoho_assets');
+
+
 
 function enqueue_autofill_zoho_script() {
     wp_enqueue_script(
