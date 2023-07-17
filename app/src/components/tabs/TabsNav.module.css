@@ -1,0 +1,20 @@
+.tabsContainer {
+  display: flex;
+}
+
+.tabButton {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 10px;
+  margin-right: 10px;
+  border-bottom: 5px solid transparent;
+}
+
+.tabButton:hover {
+  border-bottom: 5px solid #22E2B5;
+}
+
+.active {
+  border-bottom: 5px solid #22E2B5;
+}
