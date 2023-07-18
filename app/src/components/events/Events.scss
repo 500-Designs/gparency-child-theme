@@ -19,13 +19,16 @@
     align-items: center;
     justify-content: space-between;
     gap: 30px;
+    > div:nth-child(2) {
+      margin: 0 auto 0 0;
+    }
     @media (max-width: 768px) {
       align-items: stretch;
       flex-direction: column;
       gap: 24px;
-      #PostSearch {
+      & > div  {
         max-width: none;
-        width: auto;
+        max-width: -webkit-fill-available;
       }
     }
   }

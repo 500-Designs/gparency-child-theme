@@ -1,0 +1,42 @@
+@import "../../styles/colors.scss";
+
+
+#DateRangePicker {
+  display: flex;
+  gap: 8px;
+  padding: 13px 16px;
+  border: 1px solid $neutralGray;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 255px;
+  max-height: 54px;
+  align-items: center;
+  background: white;
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+  input {
+    font-style: normal;
+    font-weight: 400;
+    outline: none;
+    border: none;
+    width: 100%;
+    font-size: 16px;
+    &:placeholder {
+        color: $darkGray;
+        font-size: 16px;
+    }
+  }
+  .react-datepicker-wrapper {
+    width: 100%;
+    .react-datepicker__close-icon {
+        &:after {
+            background: $brandGreen;
+        }
+    }
+  }
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
+}

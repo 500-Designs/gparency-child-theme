@@ -51,14 +51,25 @@
     letter-spacing: -0.8px;
     line-height: normal;
   }
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
   .meta {
     display: flex;
-    gap: 20px;
+    flex-direction: column;
+    gap: 8px;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     color: $lightBody;
     margin: auto 0 0 0;
+    & > div {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
     & > span:not(.date) {
       color: $neutralGray;
     }

@@ -15,7 +15,6 @@ const EventsGrid = ({ events, searchQuery }) => {
             </div>
         );
     }
-    console.log("Events: ", events);
     return (
         <div id="EventsGrid">
             <div className="grid-container">
@@ -30,6 +29,7 @@ const EventsGrid = ({ events, searchQuery }) => {
                             endDate={event['end-date']}
                             location={event['event-location']}
                             eventLink={event['event-link']}
+                            mediaID={event['_thumbnail_id']}
                         />
                     );
                 })}

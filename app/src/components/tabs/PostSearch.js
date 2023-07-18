@@ -3,10 +3,21 @@ import React, { useState, useEffect } from 'react';
 import { useDebounce } from '../../utils';
 import SearchIcon from '../vectors/SearchIcon';
 import './PostSearch.scss';
+import CalendarIcon from "../vectors/CalendarIcon";
+import PinIcon from "../vectors/PinIcon";
 
-const PostSearch = ({ onSearch, placeholder = 'Search' }) => {
+const PostSearch = ({ onSearch, type = "blog" }) => {
     const [searchValue, setSearchValue] = useState('');
     const debouncedSearchValue = useDebounce(searchValue, 500);
+    let placeholder = 'Search';
+    let icon = <SearchIcon />;
+
+    if (type === "location") {
+        icon = <PinIcon />;
+        placeholder = 'Enter Location';
+    } else if (type === "event") {
+        placeholder = 'Search';
+    }
 
     useEffect(() => {
         onSearch(debouncedSearchValue);
@@ -25,7 +36,7 @@ const PostSearch = ({ onSearch, placeholder = 'Search' }) => {
 
     return (
         <div id="PostSearch">
-            <SearchIcon />
+            {icon}
             <input
                 type="text"
                 value={searchValue}

@@ -80,3 +80,37 @@ export const useGetPostFirstImage = (postId) => {
 
     return imageId;
 };
+
+export function renderDateRange(startDate, endDate) {
+    // If no startDate, return null
+    if (!startDate) {
+        return null;
+    }
+
+    // Parse the startDate
+    const start = new Date(startDate);
+
+    // Create date formatters
+    const monthDayFormat = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' });
+    const yearFormat = new Intl.DateTimeFormat('en-US', { year: 'numeric' });
+
+    // If no endDate, return only the startDate
+    if (!endDate) {
+        return `${monthDayFormat.format(start)}, ${yearFormat.format(start)}`;
+    }
+
+    // Parse the endDate
+    const end = new Date(endDate);
+
+    if (start.getFullYear() !== end.getFullYear()) {
+        // Different years
+        return `${monthDayFormat.format(start)}, ${yearFormat.format(start)} - ${monthDayFormat.format(end)}, ${yearFormat.format(end)}`;
+    } else if (start.getMonth() !== end.getMonth()) {
+        // Same year, different months
+        return `${monthDayFormat.format(start)} - ${monthDayFormat.format(end)}, ${yearFormat.format(end)}`;
+    } else {
+        // Same month and year
+        const dayFormat = new Intl.DateTimeFormat('en-US', { day: 'numeric' });
+        return `${monthDayFormat.format(start).replace(/ \d+$/, '')} ${dayFormat.format(start)}-${dayFormat.format(end)}, ${yearFormat.format(end)}`;
+    }
+}

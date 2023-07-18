@@ -46,7 +46,8 @@ const PostBox = ({
         ) : firstPostImage ? (
           <PostImage mediaId={firstPostImage} />
         ) : (
-          <span>No post image found</span>
+          <PostImage mediaId={932} />
+          // <span>No post image found</span>
         )}
       </div>
       {(postCategories.length > 0) && (
