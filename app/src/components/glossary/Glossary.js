@@ -16,20 +16,24 @@ const Glossary = () => {
   const [letterQuery, setLetterQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [firstLetters, setFirstLetters] = useState([]);
-
+  
+  console.log("firstLetters: ", firstLetters);
   const getGlossaryItems = async () => {
+    let per_page = 15;
     try {
       setIsLoading(true);
-
-      let url = `${wpUrl}/jetengine/v1/glossary?page=${currentPageState}&per_page=15`;
-
-      if (searchQuery !== "") {
-        url += `&search=${searchQuery}`;
-      }
-
-      if (letterQuery !== "") {
+      let url = `${wpUrl}/jetengine/v1/glossary?`;
+      if (typeof letterQuery  === 'string' && letterQuery ) {
+        console.log("letterQuery: ", letterQuery);
         url += `&starts_with_letter=${letterQuery}`;
+      } else {
+        console.log("letterQuery: ", letterQuery);
+        url += `?page=${currentPageState}&per_page=${per_page}`;
+        if (searchQuery !== "") {
+          url += `&search=${searchQuery}`;
+        }
       }
+
 
       const response = await fetch(url);
       const data = await response.json();
@@ -98,7 +102,6 @@ const Glossary = () => {
         </>
       )}
 
-      {/* LetterNav component */}
       <LetterNav
         letters={firstLetters || []}
         activeLetter={letterQuery}
