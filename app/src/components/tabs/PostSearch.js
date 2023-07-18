@@ -4,7 +4,7 @@ import { useDebounce } from '../../utils';
 import SearchIcon from '../vectors/SearchIcon';
 import './PostSearch.scss';
 
-const PostSearch = ({ onSearch }) => {
+const PostSearch = ({ onSearch, placeholder = 'Search' }) => {
     const [searchValue, setSearchValue] = useState('');
     const debouncedSearchValue = useDebounce(searchValue, 500);
 
@@ -31,7 +31,7 @@ const PostSearch = ({ onSearch }) => {
                 value={searchValue}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
-                placeholder="Search"
+                placeholder={placeholder}
             />
         </div>
     );

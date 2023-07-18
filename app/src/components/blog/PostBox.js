@@ -63,7 +63,7 @@ const PostBox = ({
       )}
 
       <h3>
-        <a href={postLink} target="_blank" rel="noopener noreferrer">
+        <a href={postLink} target="_self" rel="noopener noreferrer">
           {postTitle}
         </a>
       </h3>

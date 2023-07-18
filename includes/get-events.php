@@ -49,7 +49,25 @@ function gparency_get_events($request) {
         );
     }
 
-    $posts = get_posts($args);
+    // Get per_page parameter value
+    $per_page = $request->get_param('per_page');
+    if ($per_page && is_numeric($per_page)) {
+        $args['posts_per_page'] = intval($per_page); // Set the desired number of posts per page
+    } else {
+        $args['posts_per_page'] = 10; // Set a default number of posts per page if per_page is not provided or is invalid
+    }
+
+    // Get page parameter value
+    $page = $request->get_param('page');
+    if ($page && is_numeric($page)) {
+        $args['paged'] = intval($page); // Set the desired page number
+    } else {
+        $args['paged'] = 1; // Set the default page number to 1 if page is not provided or is invalid
+    }
+
+    // Perform the query
+    $query = new WP_Query($args);
+    $posts = $query->get_posts();
     $data  = array();
 
     foreach ($posts as $post) {
@@ -69,6 +87,12 @@ function gparency_get_events($request) {
 
         $data[] = $post_data;
     }
+
+    // Calculate the total number of pages
+    $total_pages = ceil($query->found_posts / $args['posts_per_page']);
+
+    // Set the 'X-WP-TotalPages' header
+    header('X-WP-TotalPages: ' . $total_pages);
 
     return new WP_REST_Response($data, 200);
 }

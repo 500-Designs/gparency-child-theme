@@ -1,0 +1,39 @@
+@import "../../styles/colors.scss";
+
+#EventsGrid {
+  margin: 64px auto;
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Example grid columns: 3 equal-width columns */
+    grid-gap: 30px;
+    justify-content: center;
+
+    @media (max-width: 767px) {
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 768px) and (max-width: 991px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .post {
+    padding: 25px;
+    border: 1px solid $gray2;
+  }
+
+  .categories {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .PostBox {
+    .categories {
+        display: flex;
+        gap: 10px;
+    }
+  }
+  @media (max-width: 768px) {
+    margin: 24px auto;
+  }
+}
