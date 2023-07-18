@@ -1,11 +1,11 @@
 
 import React from 'react';
-import styles from './Events.module.css';
+import './Events.scss';
 
 const Events = () => {
   return (
-    <div className={styles.container}>
-      <span className={styles.content}>Events</span>
+    <div id="EventsGrid">
+      <span>Events</span>
     </div>
   );
 };

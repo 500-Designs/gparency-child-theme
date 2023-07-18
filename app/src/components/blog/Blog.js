@@ -91,7 +91,7 @@ const Blog = () => {
 
     return (
         <CategoriesProvider>
-            <div id="Blog" className={isLoading ? 'loading' : ''}>
+            <div id="BlogGrid" className={isLoading ? 'loading' : ''}>
                 <div className='filters'>
                     <CategoriesList categories={categories} getCategory={handleCategoryChange}
                         currentCategory={currentCategory ? currentCategory.id : 1} />

@@ -7,11 +7,53 @@ function gparency_get_events($request) {
         'posts_per_page' => -1,  // Retrieve all posts
     );
 
+    // Get search parameter value
+    $search = $request->get_param('search');
+    if ($search) {
+        $args['s'] = $search; // Apply search parameter
+    }
+
+    // Get location parameter value
+    $location = $request->get_param('location');
+    if ($location) {
+        $args['meta_query'][] = array(
+            'key'     => 'event-location',
+            'value'   => $location,
+            'compare' => 'LIKE',
+        );
+    }
+
+    // Get start-date and end-date parameters values
+    $start_date = $request->get_param('start-date');
+    $end_date   = $request->get_param('end-date');
+    if ($start_date && $end_date) {
+        $args['meta_query'][] = array(
+            'key'     => 'start-date',
+            'value'   => array($start_date, $end_date),
+            'type'    => 'DATE',
+            'compare' => 'BETWEEN',
+        );
+    } elseif ($start_date) {
+        $args['meta_query'][] = array(
+            'key'     => 'start-date',
+            'value'   => $start_date,
+            'type'    => 'DATE',
+            'compare' => '>=',
+        );
+    } elseif ($end_date) {
+        $args['meta_query'][] = array(
+            'key'     => 'start-date',
+            'value'   => $end_date,
+            'type'    => 'DATE',
+            'compare' => '<=',
+        );
+    }
+
     $posts = get_posts($args);
     $data  = array();
 
     foreach ($posts as $post) {
-        $post_data   = array(
+        $post_data = array(
             'id'      => $post->ID,
             'title'   => $post->post_title,
             'content' => $post->post_content,
