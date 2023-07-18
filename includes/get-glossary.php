@@ -2,6 +2,17 @@
 
 // Register REST API endpoint for 'glossary' post type
 function gparency_get_glossary($request) {
+    // Set a unique cache key based on the request parameters
+    $cache_key = 'glossary_' . md5(serialize($request->get_params()));
+
+    // Try to retrieve the cached response
+    $cached_response = get_transient($cache_key);
+
+    if ($cached_response !== false) {
+        // If the response is cached, return it
+        return $cached_response;
+    }
+
     $args = array(
         'post_type'      => 'glossary',
         'orderby'        => 'title',
@@ -39,7 +50,7 @@ function gparency_get_glossary($request) {
 
     // Check if the "starts_with_letter" parameter is set
     $starts_with_letter = $request->get_param('starts_with_letter');
-    if($starts_with_letter && is_numeric($starts_with_letter)) {
+    if ($starts_with_letter && is_numeric($starts_with_letter)) {
         // Get first letters only
         foreach ($posts as $post) {
             // Get the first letter from the title and add it to the array
@@ -48,8 +59,8 @@ function gparency_get_glossary($request) {
                 $letters[] = $first_letter;
             }
         }
-        return new WP_REST_Response($letters, 200);
-    } elseif($starts_with_letter) {
+        $response = new WP_REST_Response($letters, 200);
+    } elseif ($starts_with_letter) {
         // Get posts starting with a certain letter
         foreach ($posts as $post) {
             $first_letter = substr($post->post_title, 0, 1);
@@ -68,6 +79,7 @@ function gparency_get_glossary($request) {
                 $data[] = $post_data;
             }
         }
+        $response = new WP_REST_Response($data, 200);
     } else {
         foreach ($posts as $post) {
             $post_data = array(
@@ -83,16 +95,20 @@ function gparency_get_glossary($request) {
             }
             $data[] = $post_data;
         }
+        $response = new WP_REST_Response($data, 200);
     }
 
     // Calculate the total number of pages
     $total_pages = ceil($query->found_posts / $args['posts_per_page']);
 
     // Set the 'X-WP-TotalPages' header
-    header('X-WP-TotalPages: ' . $total_pages);
+    $response->header('X-WP-TotalPages', $total_pages);
 
-    // Return the original data
-    return new WP_REST_Response($data, 200);
+    // Cache the response for 1 hour (you can adjust the duration as needed)
+    set_transient($cache_key, $response, 60 * 60);
+
+    // Return the response
+    return $response;
 }
 
 add_action(
