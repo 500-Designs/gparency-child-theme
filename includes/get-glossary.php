@@ -4,7 +4,9 @@
 function gparency_get_glossary($request) {
     $args = array(
         'post_type'      => 'glossary',
+        'orderby'        => 'title',
         'posts_per_page' => -1,  // Retrieve all posts
+        'order'          => 'ASC'
     );
 
     // Get search parameter value
@@ -18,7 +20,7 @@ function gparency_get_glossary($request) {
     if ($per_page && is_numeric($per_page)) {
         $args['posts_per_page'] = intval($per_page); // Set the desired number of posts per page
     } else {
-        $args['posts_per_page'] = 10; // Set a default number of posts per page if per_page is not provided or is invalid
+        $args['posts_per_page'] = -1; // Set a default number of posts per page if per_page is not provided or is invalid
     }
 
     // Get page parameter value
