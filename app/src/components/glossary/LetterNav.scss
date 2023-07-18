@@ -1,0 +1,27 @@
+@import "../../styles/colors.scss";
+
+#LetterNav {
+  .clear {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #f0f0e7;
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: 14px 14px;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: 20px;
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+}

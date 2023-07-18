@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { useDebounce } from '../../utils';
 import SearchIcon from '../vectors/SearchIcon';
 import './PostSearch.scss';
-import CalendarIcon from "../vectors/CalendarIcon";
+import CloseIcon from "../vectors/CloseIcon";
 import PinIcon from "../vectors/PinIcon";
 
-const PostSearch = ({ onSearch, type = "blog" }) => {
+const PostSearch = ({ onSearch, type = "blog", clearQueries, searchQuery, isDisabled }) => {
     const [searchValue, setSearchValue] = useState('');
     const debouncedSearchValue = useDebounce(searchValue, 500);
     let placeholder = 'Search';
@@ -34,8 +34,15 @@ const PostSearch = ({ onSearch, type = "blog" }) => {
         }
     };
 
+    const handleClear = (e) => {
+        e.preventDefault();
+        onSearch("");
+        setSearchValue("")
+        clearQueries();
+    };
+
     return (
-        <div id="PostSearch">
+        <div id="PostSearch" className={`${isDisabled ? "is-disabled" : ""}`}>
             {icon}
             <input
                 type="text"
@@ -44,6 +51,11 @@ const PostSearch = ({ onSearch, type = "blog" }) => {
                 onKeyDown={handleKeyDown}
                 placeholder={placeholder}
             />
+            {(searchQuery && type === "glossary") && 
+                <button onClick={handleClear} className='clear'>
+                    <CloseIcon />
+                </button>
+            }
         </div>
     );
 };

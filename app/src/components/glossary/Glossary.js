@@ -16,18 +16,22 @@ const Glossary = () => {
   const [letterQuery, setLetterQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [firstLetters, setFirstLetters] = useState([]);
-  
-  console.log("firstLetters: ", firstLetters);
-  const getGlossaryItems = async () => {
+
+  const clearQueries = () => {
+    setSearchQuery("");
+    setLetterQuery("");
+  }
+
+
+  const getGlossaryItems = async (justLetter) => {
     let per_page = 15;
     try {
       setIsLoading(true);
       let url = `${wpUrl}/jetengine/v1/glossary?`;
-      if (typeof letterQuery  === 'string' && letterQuery ) {
+      if (justLetter === "just_letter") {
         console.log("letterQuery: ", letterQuery);
         url += `&starts_with_letter=${letterQuery}`;
       } else {
-        console.log("letterQuery: ", letterQuery);
         url += `?page=${currentPageState}&per_page=${per_page}`;
         if (searchQuery !== "") {
           url += `&search=${searchQuery}`;
@@ -65,7 +69,11 @@ const Glossary = () => {
   }, [currentPageState]);
 
   useEffect(() => {
-    getGlossaryItems();
+    if (letterQuery !== "" && (typeof letterQuery === "string")) {
+      getGlossaryItems("just_letter");
+    } else {
+      getGlossaryItems();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery, letterQuery]);
 
@@ -86,27 +94,40 @@ const Glossary = () => {
   return (
     <div id="GlossaryGrid" className={isLoading ? "loading" : ""}>
       <div className="filters">
-        <PostSearch onSearch={handleSearch} placeholder="Search Glossary" />
+        <LetterNav
+          letters={firstLetters || []}
+          activeLetter={letterQuery}
+          onLetterClick={handleLetterQuery}
+          clearQueries={clearQueries}
+          isDisabled={searchQuery}
+        />
+        <PostSearch
+          onSearch={handleSearch}
+          placeholder="Search Glossary"
+          searchQuery={searchQuery}
+          clearQueries={clearQueries}
+          type="glossary"
+          isDisabled={letterQuery}
+        />
       </div>
 
       {isLoading ? (
         <Loader />
       ) : (
         <>
-          <GlossaryGrid items={glossaryItems} />
-          <PostsPagination
-            currentPage={currentPageState}
-            pageCount={pageCount}
-            onPageChange={setCurrentPageState}
-          />
+          <GlossaryGrid items={glossaryItems} searchQuery={searchQuery} />
+          {!letterQuery &&
+            <PostsPagination
+              currentPage={currentPageState}
+              pageCount={pageCount}
+              onPageChange={setCurrentPageState}
+            />
+
+          }
         </>
       )}
 
-      <LetterNav
-        letters={firstLetters || []}
-        activeLetter={letterQuery}
-        onLetterClick={handleLetterQuery}
-      />
+
     </div>
   );
 };

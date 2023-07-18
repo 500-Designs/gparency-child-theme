@@ -1,20 +1,21 @@
 @import "../../styles/colors.scss";
 
 #GlossaryGrid {
-  margin: 64px auto;
+  margin: 24px auto;
   .grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Example grid columns: 3 equal-width columns */
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
     grid-gap: 30px;
     justify-content: center;
 
-    @media (max-width: 767px) {
+    /* @media (max-width: 767px) {
       grid-template-columns: 1fr;
     }
 
     @media (min-width: 768px) and (max-width: 991px) {
       grid-template-columns: repeat(2, 1fr);
-    }
+    } */
   }
 
   .post {
@@ -29,9 +30,39 @@
   }
   .PostBox {
     .categories {
-        display: flex;
-        gap: 10px;
+      display: flex;
+      gap: 10px;
     }
+  }
+  .no-results {
+    h3 {
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 120%; /* 33.6px */
+      letter-spacing: -1.12px;
+      color: $lightHeading;
+    }
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+  .letter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    margin: 15px 0;
+  }
+  .letter-heading {
+    font-size: 56px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%; /* 67.2px */
+    letter-spacing: -2.24px;
+    color: $lightHeading;
+    margin: 0;
   }
   @media (max-width: 768px) {
     margin: 24px auto;
