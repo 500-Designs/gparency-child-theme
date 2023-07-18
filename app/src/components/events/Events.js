@@ -15,8 +15,10 @@ const Events = () => {
   const [pageCount, setPageCount] = useState(1);
   const [searchQuery, setSearchQuery] = useState([]);
   const [locationQuery, setLocationQuery] = useState("");
-  const [dateQuery, setDateQuery] = useState([]);
+  const [dateQuery, setDateQuery] = useState(['', '']);
   const [isLoading, setIsLoading] = useState(false);
+
+  console.log("dateQuery: ", dateQuery);
   const getEvents = async () => {
     try {
       setIsLoading(true);
@@ -32,7 +34,8 @@ const Events = () => {
       }
 
       if (dateQuery !== "") {
-        url += `&date=${dateQuery}`;
+        url += `&start_date=${dateQuery[0]}`;
+        url += `&end_date=${dateQuery[1]}`;
       }
 
       const response = await fetch(url);

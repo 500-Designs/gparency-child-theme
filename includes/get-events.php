@@ -24,28 +24,36 @@ function gparency_get_events($request) {
     }
 
     // Get start-date and end-date parameters values
-    $start_date = $request->get_param('start-date');
-    $end_date   = $request->get_param('end-date');
+    $start_date = $request->get_param('start_date');
+    $end_date   = $request->get_param('end_date');
+
     if ($start_date && $end_date) {
+        $start_date = strtotime($start_date);
+        $end_date = strtotime($end_date);
+
         $args['meta_query'][] = array(
             'key'     => 'start-date',
-            'value'   => array($start_date, $end_date),
+            'value'   => array(date('Y-m-d', $start_date), date('Y-m-d', $end_date)),
             'type'    => 'DATE',
             'compare' => 'BETWEEN',
         );
     } elseif ($start_date) {
+        $start_date = strtotime($start_date);
+
         $args['meta_query'][] = array(
             'key'     => 'start-date',
-            'value'   => $start_date,
+            'value'   => date('Y-m-d', $start_date),
             'type'    => 'DATE',
-            'compare' => '>=',
+            'compare' => '==',
         );
     } elseif ($end_date) {
+        $end_date = strtotime($end_date);
+
         $args['meta_query'][] = array(
             'key'     => 'start-date',
-            'value'   => $end_date,
+            'value'   => date('Y-m-d', $end_date),
             'type'    => 'DATE',
-            'compare' => '<=',
+            'compare' => '==',
         );
     }
 
