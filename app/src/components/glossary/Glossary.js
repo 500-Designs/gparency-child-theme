@@ -4,7 +4,7 @@ import PostsPagination from "../tabs/PostsPagination";
 import PostSearch from "../tabs/PostSearch";
 import Loader from "../tabs/Loader";
 import GlossaryGrid from "./GlossaryGrid";
-import { useWpSiteUrl } from "../../utils";
+import { useWpSiteUrl, scrollToTabs } from "../../utils";
 import LetterNav from "./LetterNav";
 
 const Glossary = () => {
@@ -16,6 +16,12 @@ const Glossary = () => {
   const [letterQuery, setLetterQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [firstLetters, setFirstLetters] = useState([]);
+  const [hasChangedPage, setHasChangedPage] = useState(false);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPageState(newPage);
+    setHasChangedPage(true);
+  };
 
   const clearQueries = () => {
     setSearchQuery("");
@@ -27,10 +33,10 @@ const Glossary = () => {
     let per_page = 15;
     try {
       setIsLoading(true);
-      let url = `${wpUrl}/jetengine/v1/glossary?`;
+      let url = `${wpUrl}/jetengine/v1/glossary`;
       if (justLetter === "just_letter") {
         console.log("letterQuery: ", letterQuery);
-        url += `&starts_with_letter=${letterQuery}`;
+        url += `?starts_with_letter=${letterQuery}`;
       } else {
         url += `?page=${currentPageState}&per_page=${per_page}`;
         if (searchQuery !== "") {
@@ -77,6 +83,15 @@ const Glossary = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery, letterQuery]);
 
+
+  // useEffect to scroll to element after data load
+  useEffect(() => {
+    if (!isLoading && hasChangedPage) {
+      scrollToTabs();
+      setHasChangedPage(false); // reset it back to false for next use.
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading]);
   const handleSearch = (query) => {
     setSearchQuery(query);
     if (query !== searchQuery) {
@@ -120,7 +135,7 @@ const Glossary = () => {
             <PostsPagination
               currentPage={currentPageState}
               pageCount={pageCount}
-              onPageChange={setCurrentPageState}
+              onPageChange={handlePageChange}
             />
 
           }

@@ -105,7 +105,7 @@ function gparency_get_glossary($request) {
     $response->header('X-WP-TotalPages', $total_pages);
 
     // Cache the response for 1 hour (you can adjust the duration as needed)
-    set_transient($cache_key, $response, 60 * 60);
+    set_transient($cache_key, $response, 15 * 60);
 
     // Return the response
     return $response;

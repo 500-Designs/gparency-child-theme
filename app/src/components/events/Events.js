@@ -6,7 +6,7 @@ import Loader from "../tabs/Loader";
 import EventsGrid from "./EventsGrid";
 import DateSearchDropdown from "./DateSearchDropdown";
 import DateRangePicker from "./DateRangePicker";
-import { useWpSiteUrl } from "../../utils";
+import { useWpSiteUrl, scrollToTabs } from '../../utils';
 
 const Events = () => {
   const wpUrl = useWpSiteUrl();
@@ -17,6 +17,12 @@ const Events = () => {
   const [locationQuery, setLocationQuery] = useState("");
   const [dateQuery, setDateQuery] = useState(['', '']);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasChangedPage, setHasChangedPage] = useState(false);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPageState(newPage);
+    setHasChangedPage(true);
+  };
 
   console.log("dateQuery: ", dateQuery);
   const getEvents = async () => {
@@ -82,6 +88,15 @@ const Events = () => {
     }
   };
 
+  // useEffect to scroll to element after data load
+  useEffect(() => {
+    if (!isLoading && hasChangedPage) {
+      scrollToTabs();
+      setHasChangedPage(false); // reset it back to false for next use.
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading]);
+
   return (
     <div id="EventsGrid" className={isLoading ? "loading" : ""}>
       <div className="filters">
@@ -90,7 +105,7 @@ const Events = () => {
           <DateRangePicker onChange={handleDateQueryChange} />
           :
           <DateSearchDropdown onChange={handleDateQueryChange} />
-        } 
+        }
         <PostSearch onSearch={handleSearch} placeholder="Search Events" />
       </div>
 
@@ -102,7 +117,7 @@ const Events = () => {
           <PostsPagination
             currentPage={currentPageState}
             pageCount={pageCount}
-            onPageChange={setCurrentPageState}
+            onPageChange={handlePageChange}
           />
         </>
       )}

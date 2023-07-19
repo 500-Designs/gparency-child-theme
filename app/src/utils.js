@@ -124,3 +124,12 @@ export const convertToPhpDate = (date) => {
     }
     return '';
 };
+
+
+export const scrollToTabs = () => {
+    // const element = document.querySelector('#BlogGrid .categories-list');
+    const element = document.querySelector('#TabsNav');
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+};

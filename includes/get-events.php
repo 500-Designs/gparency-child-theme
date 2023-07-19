@@ -73,7 +73,7 @@ function gparency_get_events($request) {
     if ($per_page && is_numeric($per_page)) {
         $args['posts_per_page'] = intval($per_page); // Set the desired number of posts per page
     } else {
-        $args['posts_per_page'] = 10; // Set a default number of posts per page if per_page is not provided or is invalid
+        $args['posts_per_page'] = -1; // Set a default number of posts per page if per_page is not provided or is invalid
     }
 
     // Get page parameter value
@@ -116,7 +116,7 @@ function gparency_get_events($request) {
     $response = new WP_REST_Response($data, 200);
 
     // Cache the response for 1 hour (you can adjust the duration as needed)
-    set_transient($cache_key, $response, 60 * 60);
+    set_transient($cache_key, $response, 15 * 60);
 
     // Return the response
     return $response;
