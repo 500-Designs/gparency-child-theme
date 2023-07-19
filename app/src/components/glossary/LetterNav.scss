@@ -10,6 +10,9 @@
     font-style: normal;
     font-weight: 500;
     color: $lightHeading;
+    &.active {
+      color: $brandGreen;
+    }
   }
   .clear {
     color: #aaa;

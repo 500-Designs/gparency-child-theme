@@ -127,9 +127,9 @@ export const convertToPhpDate = (date) => {
 
 
 export const scrollToTabs = () => {
-    // const element = document.querySelector('#BlogGrid .categories-list');
     const element = document.querySelector('#TabsNav');
     if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        console.log("scrollToTabs TabsNav");
+        element.scrollIntoView({ behavior: 'smooth', inline: 'nearest', offsetTop: 500 });
     }
 };

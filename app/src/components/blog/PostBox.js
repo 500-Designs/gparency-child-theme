@@ -19,6 +19,10 @@ const PostBox = ({
   const [readingTime, setReadingTime] = useState("");
 
   const getCategoryName = (categoryId) => {
+    if (!categories || categories.length === 0) {
+      return "";
+    }
+
     const category = categories.find((category) => category.id === categoryId);
     return category ? category.name : "";
   };
@@ -50,33 +54,36 @@ const PostBox = ({
           // <span>No post image found</span>
         )}
       </div>
-      {(postCategories.length > 0) && (
-        <div className="categories">
-          {postCategories.map((categoryId, i) => {
-            // if (categoryId === 1) return false;
-            return (
-              <span key={categoryId} data-id={categoryId}>
-                {getCategoryName(categoryId)}
-              </span>
-            );
-          })}
-        </div>
-      )}
-
-      <h3>
-        <a href={postLink} target="_self" rel="noopener noreferrer">
-          {postTitle}
-        </a>
-      </h3>
-      <div className="meta">
-        <span className="date">{formatDate(postDate)}</span>
-        {readingTime && (
-          <>
-            <span>|</span><div dangerouslySetInnerHTML={{ __html: readingTime }}></div>
-          </>
+      <div className="content">
+        {postCategories.length > 0 && (
+          <div className="categories">
+            {postCategories.map((categoryId, i) => {
+              // if (categoryId === 1) return false;
+              return (
+                <span key={categoryId} data-id={categoryId}>
+                  {getCategoryName(categoryId)}
+                </span>
+              );
+            })}
+          </div>
         )}
+
+        <h3>
+          <a href={postLink} target="_self" rel="noopener noreferrer">
+            {postTitle}
+          </a>
+        </h3>
+        <div className="meta">
+          <span className="date">{formatDate(postDate)}</span>
+          {readingTime && (
+            <>
+              <span>|</span>
+              <div dangerouslySetInnerHTML={{ __html: readingTime }}></div>
+            </>
+          )}
+        </div>
       </div>
-    </div >
+    </div>
   );
 };
 

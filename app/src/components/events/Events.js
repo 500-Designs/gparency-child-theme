@@ -24,7 +24,6 @@ const Events = () => {
     setHasChangedPage(true);
   };
 
-  console.log("dateQuery: ", dateQuery);
   const getEvents = async () => {
     try {
       setIsLoading(true);
@@ -39,7 +38,7 @@ const Events = () => {
         url += `&location=${locationQuery}`;
       }
 
-      if (dateQuery !== "") {
+      if (dateQuery[0]) {
         url += `&start_date=${dateQuery[0]}`;
         url += `&end_date=${dateQuery[1]}`;
       }
@@ -98,7 +97,7 @@ const Events = () => {
   }, [isLoading]);
 
   return (
-    <div id="EventsGrid" className={isLoading ? "loading" : ""}>
+    <div id="Events" className={isLoading ? "loading" : ""}>
       <div className="filters">
         <PostSearch onSearch={handleLocationChange} type="location" />
         {dateQuery[0] === 'custom' ?

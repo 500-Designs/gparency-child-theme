@@ -6,6 +6,7 @@ import CategoriesList from './CategoriesList';
 import PostSearch from '../tabs/PostSearch';
 import Loader from '../tabs/Loader';
 import PostsGrid from './PostsGrid';
+import FeaturedPosts from './FeaturedPosts';
 import { CategoriesProvider } from '../../context/CategoriesContext';
 
 const Blog = () => {
@@ -18,6 +19,7 @@ const Blog = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [hasChangedPage, setHasChangedPage] = useState(false);
+    const [isInitial, setIsInitial] = useState(true);
 
     const getPosts = async () => {
         try {
@@ -48,9 +50,15 @@ const Blog = () => {
         }
     };
 
-    const handlePageChange = (newPage) => {
-        setCurrentPage(newPage);
-        setHasChangedPage(true);
+    const getCategories = async () => {
+        try {
+            const response = await fetch(`${wpUrl}/wp/v2/categories`);
+            const data = await response.json();
+            const categoriesData = data.map((category) => ({ id: category.id, name: category.name }));
+            setCategories(categoriesData);
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     useEffect(() => {
@@ -61,17 +69,20 @@ const Blog = () => {
     useEffect(() => {
         getPosts();
         // eslint-disable-next-line react-hooks/exhaustive-deps
+        if (currentCategory || searchQuery ) {
+            setIsInitial(false);
+            setCurrentPage(1)
+        } else {
+            setIsInitial(true)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchQuery, currentCategory]);
 
-    const getCategories = async () => {
-        try {
-            const response = await fetch(`${wpUrl}/wp/v2/categories`);
-            const data = await response.json();
-            const categoriesData = data.map((category) => ({ id: category.id, name: category.name }));
-            setCategories(categoriesData);
-        } catch (error) {
-            console.error('Error:', error);
-        }
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+        setHasChangedPage(true);
+        setIsInitial(false)
     };
 
     const handleSearch = query => {
@@ -108,7 +119,7 @@ const Blog = () => {
 
     return (
         <CategoriesProvider>
-            <div id="BlogGrid" className={isLoading ? 'loading' : ''}>
+            <div id="Blog" className={isLoading ? 'loading' : ''}>
                 <div className='filters'>
                     <CategoriesList categories={categories} getCategory={handleCategoryChange}
                         currentCategory={currentCategory ? currentCategory.id : 1} />
@@ -119,6 +130,9 @@ const Blog = () => {
                     ? <Loader />
                     :
                     <>
+                        {isInitial &&
+                            <FeaturedPosts categories={categories} />
+                        }
                         <PostsGrid posts={posts} categories={categories} />
                         <PostsPagination currentPage={currentPage} pageCount={pageCount} onPageChange={handlePageChange} />
                     </>

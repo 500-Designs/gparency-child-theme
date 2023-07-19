@@ -2,7 +2,7 @@
 @import "../../styles/mixins.scss";
 
 #TabsNav {
-  margin: 36px 0;
+  margin: 36px 0 25px 0;
   border-bottom: 2px solid $gray2;
   display: flex;
   gap: 0;
@@ -11,6 +11,7 @@
     color: #03363d;
     font-weight: 500;
     margin-bottom: -2px;
+    font-size: 16px;
     border: none;
     background-color: transparent;
     cursor: pointer;

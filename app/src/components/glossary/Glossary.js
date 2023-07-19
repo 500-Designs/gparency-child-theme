@@ -35,7 +35,6 @@ const Glossary = () => {
       setIsLoading(true);
       let url = `${wpUrl}/jetengine/v1/glossary`;
       if (justLetter === "just_letter") {
-        console.log("letterQuery: ", letterQuery);
         url += `?starts_with_letter=${letterQuery}`;
       } else {
         url += `?page=${currentPageState}&per_page=${per_page}`;
@@ -58,6 +57,7 @@ const Glossary = () => {
   };
 
   const getFirstLetters = async () => {
+    setIsLoading(true);
     try {
       let url = `${wpUrl}/jetengine/v1/glossary?starts_with_letter=1`;
       const response = await fetch(url);
@@ -66,6 +66,7 @@ const Glossary = () => {
     } catch (error) {
       console.error("Error:", error);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -92,6 +93,7 @@ const Glossary = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
+
   const handleSearch = (query) => {
     setSearchQuery(query);
     if (query !== searchQuery) {

@@ -7,7 +7,6 @@ const PostsPagination = ({ currentPage, pageCount, onPageChange }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
     const handlePageChange = page => {
-        console.log("handlePageChange: ", page);
         onPageChange(page);
     };
 

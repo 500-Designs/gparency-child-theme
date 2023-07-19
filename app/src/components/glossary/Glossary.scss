@@ -2,6 +2,7 @@
 @import "../../styles/mixins.scss";
 
 #GlossaryGrid {
+  min-height: 400px;
   .content {
     font-size: 20px;
   }
@@ -19,12 +20,13 @@
     align-items: center;
     justify-content: space-between;
     gap: 30px;
+    min-height: 54px;
     > div:nth-child(2) {
       margin: 0 0 0 auto;
     }
     #LetterNav {
       &.is-disabled {
-        opacity: .3;
+        opacity: 0.3;
         display: none;
         cursor: pointer;
         pointer-events: none;
@@ -33,7 +35,7 @@
     #PostSearch {
       margin: 0 0 0 auto;
       &.is-disabled {
-        opacity: .3;
+        opacity: 0.3;
         display: none;
         cursor: pointer;
         pointer-events: none;

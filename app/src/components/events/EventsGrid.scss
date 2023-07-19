@@ -3,6 +3,7 @@
 #EventsGrid {
   margin: 64px auto;
   .grid-container {
+    margin-top: 65px;
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Example grid columns: 3 equal-width columns */
     grid-gap: 30px;
@@ -10,6 +11,7 @@
 
     @media (max-width: 767px) {
       grid-template-columns: 1fr;
+      margin-top: 32px;
     }
 
     @media (min-width: 768px) and (max-width: 991px) {
