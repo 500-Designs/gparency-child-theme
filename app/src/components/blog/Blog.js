@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Blog.scss';
 import PostsPagination from '../tabs/PostsPagination';
-import { useWpSiteUrl } from '../../utils';
+import { useWpSiteUrl, scrollToTabs } from '../../utils';
 import CategoriesList from './CategoriesList';
 import PostSearch from '../tabs/PostSearch';
 import Loader from '../tabs/Loader';
@@ -17,6 +17,7 @@ const Blog = () => {
     const [pageCount, setPageCount] = useState(1);
     const [searchQuery, setSearchQuery] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [hasChangedPage, setHasChangedPage] = useState(false);
 
     const getPosts = async () => {
         try {
@@ -45,6 +46,11 @@ const Blog = () => {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+        setHasChangedPage(true);
     };
 
     useEffect(() => {
@@ -89,6 +95,17 @@ const Blog = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+
+
+    // useEffect to scroll to element after data load
+    useEffect(() => {
+        if (!isLoading && hasChangedPage) {
+            scrollToTabs();
+            setHasChangedPage(false); // reset it back to false for next use.
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLoading]);
+
     return (
         <CategoriesProvider>
             <div id="BlogGrid" className={isLoading ? 'loading' : ''}>
@@ -103,7 +120,7 @@ const Blog = () => {
                     :
                     <>
                         <PostsGrid posts={posts} categories={categories} />
-                        <PostsPagination currentPage={currentPage} pageCount={pageCount} onPageChange={setCurrentPage} />
+                        <PostsPagination currentPage={currentPage} pageCount={pageCount} onPageChange={handlePageChange} />
                     </>
                 }
             </div>
