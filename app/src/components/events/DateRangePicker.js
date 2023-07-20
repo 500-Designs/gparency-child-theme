@@ -4,17 +4,20 @@ import 'react-datepicker/dist/react-datepicker.css';
 import CalendarIcon from '../vectors/CalendarIcon';
 import './DateRangePicker.scss';
 
-const DateRangePicker = ({ onChange }) => {
+const DateRangePicker = ({ onChange, setIsCustom }) => {
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
   const datePickerRef = useRef(null);
 
+  
+
+  
   useEffect(() => {
     if (datePickerRef.current) {
       datePickerRef.current.setOpen(true);
     }
   }, []);
-
+  
   const convertToPhpDate = (date) => {
     if (date instanceof Date) {
       const year = date.getFullYear();
@@ -26,9 +29,15 @@ const DateRangePicker = ({ onChange }) => {
   };
 
   const handleRangeChange = (update) => {
+    console.log("handleRangeChange:", update);
+    if (!update[0] && !update[1]) {
+      onChange(['','']);
+      setIsCustom(false);
+    }
     const convertedUpdate = update.map(convertToPhpDate);
     setDateRange(update);
     if (update[0] && update[1]) {
+      setIsCustom(true);
       onChange(convertedUpdate);
     }
   };
@@ -44,7 +53,7 @@ const DateRangePicker = ({ onChange }) => {
         onChange={handleRangeChange}
         isClearable={true}
         placeholderText="Custom"
-        open={true}
+        shouldCloseOnSelect={true}
       />
     </div>
   );

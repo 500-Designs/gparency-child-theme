@@ -1,23 +1,19 @@
 import React, { useState } from 'react';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import CalendarIcon from "../vectors/CalendarIcon";
 import './DateSearchDropdown.scss';
 import { convertToPhpDate } from '../../utils';
 
-const DateSearchDropdown = ({ onChange }) => {
+const DateSearchDropdown = ({ onChange, setIsCustom }) => {
     const [hasValue, setHasValue] = useState(false);
 
     const handleDateChange = (event) => {
         const selectedValue = event.target.value;
         if (selectedValue === "custom") {
-            onChange([selectedValue, '']);
+            setIsCustom(true);
         } else {
-            console.log("selectedValue: ", selectedValue);
             const dateRange = getDateRange(selectedValue);
             const convertedUpdate = dateRange.map(convertToPhpDate);
-            // const convertedUpdate = dateRange.map(selectedValue);
-            console.log("convertedUpdate: ", convertedUpdate);
             onChange(convertedUpdate);
         }
         setHasValue(selectedValue !== "any");
