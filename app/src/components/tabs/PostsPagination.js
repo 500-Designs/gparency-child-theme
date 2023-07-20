@@ -22,6 +22,12 @@ const PostsPagination = ({ currentPage, pageCount, onPageChange }) => {
         };
     }, []);
 
+    // Calculate page numbers to display
+    let startPage = Math.max(currentPage - 2, 1);
+    let endPage = Math.min(startPage + 4, pageCount);
+    startPage = Math.max(endPage - 4, 1);
+    const pageNumbers = Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
+
     return (
         <div id="PostsPagination">
             {currentPage > 1 && (
@@ -30,13 +36,13 @@ const PostsPagination = ({ currentPage, pageCount, onPageChange }) => {
                 </button>
             )}
             <div className="items">
-                {Array.from({ length: pageCount }, (_, index) => (
+                {pageNumbers.map(page => (
                     <button
-                        key={index + 1}
-                        onClick={() => handlePageChange(index + 1)}
-                        disabled={currentPage === index + 1}
+                        key={page}
+                        onClick={() => handlePageChange(page)}
+                        disabled={currentPage === page}
                     >
-                        {index + 1}
+                        {page}
                     </button>
                 ))}
             </div>
