@@ -22,10 +22,18 @@ const PostsPagination = ({ currentPage, pageCount, onPageChange }) => {
         };
     }, []);
 
-    // Calculate page numbers to display
+    // Calculate page numbers to display with truncation
     let startPage = Math.max(currentPage - 2, 1);
     let endPage = Math.min(startPage + 4, pageCount);
-    startPage = Math.max(endPage - 4, 1);
+    const truncatedStart = startPage > 2;
+    const truncatedEnd = endPage < pageCount - 1;
+
+    if (truncatedStart && !truncatedEnd) {
+        startPage = pageCount - 4;
+    } else if (!truncatedStart && truncatedEnd) {
+        endPage = 5;
+    }
+
     const pageNumbers = Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
 
     return (
@@ -36,6 +44,12 @@ const PostsPagination = ({ currentPage, pageCount, onPageChange }) => {
                 </button>
             )}
             <div className="items">
+                {truncatedStart && (
+                    <>
+                        <button onClick={() => handlePageChange(1)}>1</button>
+                        {startPage > 2 && <span>...</span>}
+                    </>
+                )}
                 {pageNumbers.map(page => (
                     <button
                         key={page}
@@ -45,6 +59,12 @@ const PostsPagination = ({ currentPage, pageCount, onPageChange }) => {
                         {page}
                     </button>
                 ))}
+                {truncatedEnd && (
+                    <>
+                        {endPage < pageCount - 1 && <span>...</span>}
+                        <button onClick={() => handlePageChange(pageCount)}>{pageCount}</button>
+                    </>
+                )}
             </div>
             {currentPage < pageCount && (
                 <button onClick={() => handlePageChange(currentPage + 1)} className='next'>
