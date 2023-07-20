@@ -1,6 +1,7 @@
 import React from "react";
 import "./EventBox.scss";
 import PostImage from "../media/PostImage";
+import PlaceHolderImage from "../media/PlaceHolderImage";
 import CalendarIcon from "../vectors/CalendarIcon";
 import PinIcon from "../vectors/PinIcon";
 import { renderDateRange } from "../../utils";
@@ -12,18 +13,18 @@ const EventBox = ({
   endDate,
   location,
   mediaID,
-  link
+  link,
+  placeholderMedia
 }) => {
   const renderDate = renderDateRange(startDate, endDate);
   return (
     <div className="EventBox">
       <div className="image">
-        {mediaID ? (
+        {mediaID ? 
           <PostImage mediaId={mediaID} />
-        ) : (
-          <PostImage mediaId={932} />
-          // <span>No post image found</span>
-        )}
+          :
+          <PlaceHolderImage data={placeholderMedia} />
+        }
       </div>
       <div className="text">
         <div className="organizer">{organizerName}</div>

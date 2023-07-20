@@ -29,7 +29,6 @@ const DateRangePicker = ({ onChange, setIsCustom }) => {
   };
 
   const handleRangeChange = (update) => {
-    console.log("handleRangeChange:", update);
     if (!update[0] && !update[1]) {
       onChange(['','']);
       setIsCustom(false);

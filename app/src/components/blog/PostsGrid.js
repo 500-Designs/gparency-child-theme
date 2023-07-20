@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 import './PostsGrid.scss';
 import parse from 'html-react-parser';
 import PostBox from './PostBox';
+import { usePlaceHolderMediaData, useWpSiteUrl } from "../../utils";
 
 const PostsGrid = ({ posts, searchQuery, categories }) => {
+
+  const mediaDetails = usePlaceHolderMediaData(useWpSiteUrl(), 932);
+
+
   if (!Array.isArray(posts) || posts.length === 0) {
     const emptyMessage = searchQuery
       ? `No posts found for "${searchQuery}"`
@@ -39,6 +44,7 @@ const PostsGrid = ({ posts, searchQuery, categories }) => {
               postLink={link}
               postCategories={postCategories}
               categories={categories}
+              placeholderMedia={mediaDetails}
             />
           );
         })}

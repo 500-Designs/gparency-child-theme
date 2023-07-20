@@ -129,7 +129,28 @@ export const convertToPhpDate = (date) => {
 export const scrollToTabs = () => {
     const element = document.querySelector('#TabsNav');
     if (element) {
-        console.log("scrollToTabs TabsNav");
         element.scrollIntoView({ behavior: 'smooth', inline: 'nearest', offsetTop: 500 });
     }
 };
+
+
+export const usePlaceHolderMediaData = (wpUrl, mediaId) => {
+    const [mediaDetails, setMediaDetails] = useState(null);
+
+    useEffect(() => {
+        const fetchMediaDetails = async () => {
+            try {
+                const response = await fetch(`${wpUrl}/wp/v2/media/${mediaId}`);
+                const media = await response.json();
+                setMediaDetails(media);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        fetchMediaDetails();
+    }, [wpUrl, mediaId]);
+    
+    return mediaDetails;
+};
+

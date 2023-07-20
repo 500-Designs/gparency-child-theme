@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./PostBox.scss";
 import PostImage from "../media/PostImage";
+import PlaceHolderImage from "../media/PlaceHolderImage";
 
 import { useWpSiteUrl, formatDate, useGetPostFirstImage } from "../../utils";
 
@@ -12,6 +13,7 @@ const PostBox = ({
   postLink,
   postCategories,
   categories,
+  placeholderMedia,
 }) => {
   const wpUrl = useWpSiteUrl();
   const firstPostImage = useGetPostFirstImage(postId);
@@ -50,8 +52,7 @@ const PostBox = ({
         ) : firstPostImage ? (
           <PostImage mediaId={firstPostImage} />
         ) : (
-          <PostImage mediaId={932} />
-          // <span>No post image found</span>
+          <PlaceHolderImage data={placeholderMedia} />
         )}
       </div>
       <div className="content">
