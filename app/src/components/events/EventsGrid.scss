@@ -2,6 +2,7 @@
 
 #EventsGrid {
   margin: 64px auto;
+  min-height: 200px;
   .grid-container {
     margin-top: 65px;
     display: grid;
@@ -34,6 +35,10 @@
         display: flex;
         gap: 10px;
     }
+  }
+  .empty {
+    margin-top: 200px;
+    text-align: center;
   }
   @media (max-width: 768px) {
     margin: 24px auto;

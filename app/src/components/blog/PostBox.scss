@@ -43,6 +43,10 @@
       gap: 10px;
       span {
         @include button-styles;
+        &:hover, &:focus {
+          background: $gray;
+          color: $lightBody;
+        }
       }
     }
     h3 {

@@ -24,6 +24,7 @@ const EventsGrid = ({ events, searchQuery }) => {
                         <EventBox
                             key={event.id}
                             title={event.title}
+                            link={event['event-link']}
                             organizerName={event['organizer-name']}
                             startDate={event['start-date']}
                             endDate={event['end-date']}

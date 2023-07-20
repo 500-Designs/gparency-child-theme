@@ -18,6 +18,8 @@ const Events = () => {
   const [dateQuery, setDateQuery] = useState(['', '']);
   const [isLoading, setIsLoading] = useState(false);
   const [hasChangedPage, setHasChangedPage] = useState(false);
+  const [isCustom, setIsCustom] = useState(false);
+  
 
   const handlePageChange = (newPage) => {
     setCurrentPageState(newPage);
@@ -100,10 +102,10 @@ const Events = () => {
     <div id="Events" className={isLoading ? "loading" : ""}>
       <div className="filters">
         <PostSearch onSearch={handleLocationChange} type="location" />
-        {dateQuery[0] === 'custom' ?
-          <DateRangePicker onChange={handleDateQueryChange} />
+        {isCustom ?
+          <DateRangePicker onChange={handleDateQueryChange} setIsCustom={setIsCustom}/>
           :
-          <DateSearchDropdown onChange={handleDateQueryChange} />
+          <DateSearchDropdown onChange={handleDateQueryChange} setIsCustom={setIsCustom}/>
         }
         <PostSearch onSearch={handleSearch} placeholder="Search Events" />
       </div>

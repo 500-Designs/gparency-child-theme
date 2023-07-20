@@ -12,6 +12,7 @@ const EventBox = ({
   endDate,
   location,
   mediaID,
+  link
 }) => {
   const renderDate = renderDateRange(startDate, endDate);
   return (
@@ -26,7 +27,12 @@ const EventBox = ({
       </div>
       <div className="text">
         <div className="organizer">{organizerName}</div>
-        <h3>{title}</h3>
+
+        <h3>
+          <a href={link} target="_blank" rel="noopener noreferrer">
+            {title}
+          </a>
+        </h3>
         <div className="meta">
           {renderDate && (
             <div>
