@@ -1,6 +1,17 @@
 <?php
 
 function custom_rest_api_endpoint_search_by_title_and_category($request) {
+    // Set a unique cache key based on the request parameters
+    $cache_key = 'search_' . md5(serialize($request->get_params()));
+
+    // Try to retrieve the cached response
+    $cached_response = get_transient($cache_key);
+
+    if ($cached_response !== false) {
+        // If the response is cached, return it
+        return $cached_response;
+    }
+
     // Get the search query parameter from the request.
     $search_query = $request->get_param('search');
 
@@ -18,11 +29,11 @@ function custom_rest_api_endpoint_search_by_title_and_category($request) {
 
     // Prepare the arguments for WP_Query.
     $args = array(
-        'post_type' => 'post',
-        'post_status' => 'publish',
-        's' => $search_query,
-        'cat' => $category_id,
-        'paged' => $page,
+        'post_type'      => 'post',
+        'post_status'    => 'publish',
+        's'              => $search_query,
+        'cat'            => $category_id,
+        'paged'          => $page,
         'posts_per_page' => $per_page,
     );
 
@@ -38,25 +49,36 @@ function custom_rest_api_endpoint_search_by_title_and_category($request) {
 
         foreach ($query->posts as $post) {
             // Get the post title, link, and other details for each post.
-            $post_title = array('rendered' => get_the_title($post->ID));
-            $post_link = get_the_permalink($post->ID);
-            $post_date = $post->post_date;
-            $featured_media = get_post_thumbnail_id($post->ID);
-            $post_categories = wp_get_post_categories($post->ID);
+            $post_title       = array('rendered' => get_the_title($post->ID));
+            $post_link        = get_the_permalink($post->ID);
+            $post_date        = $post->post_date;
+            $featured_media   = get_post_thumbnail_id($post->ID);
+            $post_categories  = wp_get_post_categories($post->ID);
 
             // Add the post details to the results array.
             $results[] = array(
-                'id' => $post->ID,
-                'date' => $post_date,
-                'title' => $post_title,
+                'id'             => $post->ID,
+                'date'           => $post_date,
+                'title'          => $post_title,
                 'featured_media' => $featured_media,
-                'link' => $post_link,
-                'categories' => $post_categories,
+                'link'           => $post_link,
+                'categories'     => $post_categories,
             );
         }
 
         // Return the results in JSON format.
-        return rest_ensure_response($results);
+        $response = rest_ensure_response($results);
+
+        // Calculate the total number of pages
+        $total_pages = ceil($query->found_posts / $per_page);
+
+        // Set the 'X-WP-TotalPages' header
+        $response->header('X-WP-TotalPages', $total_pages);
+
+        // Cache the response for 15 minutes (you can adjust the duration as needed)
+        set_transient($cache_key, $response, 15 * MINUTE_IN_SECONDS);
+
+        return $response;
     } else {
         // No posts found with the search query.
         return new WP_Error('no_results', 'No posts found with the provided search query.', array('status' => 404));
@@ -81,7 +103,7 @@ function custom_search_by_title_only($search, $wp_query) {
 // Register the REST API endpoint with additional parameters.
 add_action('rest_api_init', function () {
     register_rest_route('custom/v1', '/search/', array(
-        'methods' => 'GET',
+        'methods'  => 'GET',
         'callback' => 'custom_rest_api_endpoint_search_by_title_and_category',
     ));
 });
