@@ -7,7 +7,7 @@
   border: 1px solid $neutralGray;
   border-radius: 8px;
   width: 100%;
-  max-width: 255px;
+  max-width: 300px;
   max-height: 54px;
   align-items: center;
   background: white;
@@ -31,6 +31,17 @@
     width: 100%;
     .react-datepicker__close-icon {
       &:after {
+        width: 20px;
+        height: 20px;
+        font-family: "Arial";
+        font-size: 15px;
+        line-height: 20px;
+        text-align: center;
+        padding: 0;
+        text-transform: capitalize;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
         background: $brandGreen;
       }
     }

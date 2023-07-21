@@ -51,10 +51,12 @@
         .PostBox {
           border: none;
           padding: 0;
-          flex-direction: row;
-          .content {
-            padding: 15px 0;
-            flex: 1;
+          > a {
+            flex-direction: row;
+            .content {
+              padding: 15px 0;
+              flex: 1;
+            }
           }
         }
         .PostBox:first-child {
