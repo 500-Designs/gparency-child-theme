@@ -11,7 +11,12 @@
   flex-direction: column;
   gap: 24px;
 
-
+  > a {
+    @include link-box;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
   .image {
     height: 244px;
     width: 100%;

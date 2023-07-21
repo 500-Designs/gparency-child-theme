@@ -17,10 +17,13 @@ const EventBox = ({
   placeholderMedia
 }) => {
   const renderDate = renderDateRange(startDate, endDate);
-  return (
-    <div className="EventBox">
+  console.log("title: ",title);
+  console.log("link: ",link);
+  
+  const content = (
+    <>
       <div className="image">
-        {mediaID ? 
+        {mediaID ?
           <PostImage mediaId={mediaID} />
           :
           <PlaceHolderImage data={placeholderMedia} />
@@ -28,12 +31,7 @@ const EventBox = ({
       </div>
       <div className="text">
         <div className="organizer">{organizerName}</div>
-
-        <h3>
-          <a href={link} target="_blank" rel="noopener noreferrer">
-            {title}
-          </a>
-        </h3>
+        <h3>{title}</h3>
         <div className="meta">
           {renderDate && (
             <div>
@@ -47,6 +45,18 @@ const EventBox = ({
           )}
         </div>
       </div>
+    </>
+  );
+
+  return (
+    <div className="EventBox">
+      {link && link !== "#" ? (
+        <a href={link} target="_blank" rel="noopener noreferrer">
+          {content}
+        </a>
+      ) : (
+        content
+      )}
     </div>
   );
 };

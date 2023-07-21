@@ -44,8 +44,8 @@ const PostBox = ({
     fetchReadingTime();
   }, [postId, wpUrl]);
 
-  return (
-    <div className="PostBox" data-post-id={postId}>
+  const content = (
+    <>
       <div className="image">
         {featuredMedia > 0 ? (
           <PostImage mediaId={featuredMedia} />
@@ -69,11 +69,7 @@ const PostBox = ({
           </div>
         )}
 
-        <h3>
-          <a href={postLink} target="_self" rel="noopener noreferrer">
-            {postTitle}
-          </a>
-        </h3>
+        <h3>{postTitle}</h3>
         <div className="meta">
           <span className="date">{formatDate(postDate)}</span>
           {readingTime && (
@@ -84,6 +80,18 @@ const PostBox = ({
           )}
         </div>
       </div>
+    </>
+  );
+
+  return (
+    <div className="PostBox" data-post-id={postId}>
+      {postLink && postLink !== "#" ? (
+        <a href={postLink} target="_self" rel="noopener noreferrer">
+          {content}
+        </a>
+      ) : (
+        content
+      )}
     </div>
   );
 };
