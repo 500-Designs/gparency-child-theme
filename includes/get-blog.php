@@ -2,15 +2,15 @@
 
 function custom_rest_api_endpoint_search_by_title_and_category($request) {
     // Set a unique cache key based on the request parameters
-    $cache_key = 'search_' . md5(serialize($request->get_params()));
+    // $cache_key = 'search_' . md5(serialize($request->get_params()));
 
-    // Try to retrieve the cached response
-    $cached_response = get_transient($cache_key);
+    // // Try to retrieve the cached response
+    // $cached_response = get_transient($cache_key);
 
-    if ($cached_response !== false) {
-        // If the response is cached, return it
-        return $cached_response;
-    }
+    // if ($cached_response !== false) {
+    //     // If the response is cached, return it
+    //     return $cached_response;
+    // }
 
     // Get the search query parameter from the request.
     $search_query = $request->get_param('search');
@@ -21,7 +21,7 @@ function custom_rest_api_endpoint_search_by_title_and_category($request) {
     // Get the page parameter from the request. Default to 1 if not provided.
     $page = max(1, $request->get_param('page'));
 
-    // Get the per_page parameter from the request. Default to 10 if not provided.
+    // Get the per_page parameter from the request. Default to 9 if not provided.
     $per_page = max(9, $request->get_param('per_page'));
 
     // Add a filter to modify the search query.
@@ -31,10 +31,10 @@ function custom_rest_api_endpoint_search_by_title_and_category($request) {
     $args = array(
         'post_type'      => 'post',
         'post_status'    => 'publish',
-        's'              => $search_query,
-        'cat'            => $category_id,
+        's'              => $search_query ? $search_query : '',
+        'cat'            => intval($category_id),
         'paged'          => $page,
-        'posts_per_page' => $per_page,
+        'posts_per_page' => $per_page, // Set 'posts_per_page' directly to the value of 'per_page'
     );
 
     $query = new WP_Query($args);
@@ -75,8 +75,8 @@ function custom_rest_api_endpoint_search_by_title_and_category($request) {
         // Set the 'X-WP-TotalPages' header
         $response->header('X-WP-TotalPages', $total_pages);
 
-        // Cache the response for 15 minutes (you can adjust the duration as needed)
-        set_transient($cache_key, $response, 15 * MINUTE_IN_SECONDS);
+        // // Cache the response for 15 minutes (you can adjust the duration as needed)
+        // set_transient($cache_key, $response, 15 * MINUTE_IN_SECONDS);
 
         return $response;
     } else {

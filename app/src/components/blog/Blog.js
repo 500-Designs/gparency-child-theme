@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Blog.scss';
 import PostsPagination from '../tabs/PostsPagination';
-import { useWpSiteUrl, scrollToTabs, filterPostsByTitle } from '../../utils';
+import { useWpSiteUrl, scrollToTabs } from '../../utils';
 import CategoriesList from './CategoriesList';
 import PostSearch from '../tabs/PostSearch';
 import Loader from '../tabs/Loader';
@@ -27,9 +27,7 @@ const Blog = () => {
 
             let url = `${wpUrl}/custom/v1/search?`;
 
-            if (searchQuery !== '') {
-                url += `search=${searchQuery}&`;
-            }
+            url += `search=${searchQuery}&`;
 
             if (currentCategory && currentCategory.id !== 0) {
                 url += `category=${currentCategory.id}&`;

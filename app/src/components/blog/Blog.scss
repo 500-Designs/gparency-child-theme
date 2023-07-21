@@ -2,6 +2,7 @@
 @import "../../styles/mixins.scss";
 
 #Blog {
+  transition: all .5s ease-in-out;
   .content {
     font-size: 20px;
   }
