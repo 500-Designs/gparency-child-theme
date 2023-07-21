@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Blog.scss';
 import PostsPagination from '../tabs/PostsPagination';
-import { useWpSiteUrl, scrollToTabs } from '../../utils';
+import { useWpSiteUrl, scrollToTabs, filterPostsByTitle } from '../../utils';
 import CategoriesList from './CategoriesList';
 import PostSearch from '../tabs/PostSearch';
 import Loader from '../tabs/Loader';
@@ -25,14 +25,14 @@ const Blog = () => {
         try {
             setIsLoading(true);
 
-            let url = `${wpUrl}/wp/v2/posts?`;
+            let url = `${wpUrl}/custom/v1/search?`;
 
             if (searchQuery !== '') {
                 url += `search=${searchQuery}&`;
             }
 
             if (currentCategory && currentCategory.id !== 0) {
-                url += `categories=${currentCategory.id}&`;
+                url += `category=${currentCategory.id}&`;
             }
 
             url += `page=${currentPage}`;
@@ -133,7 +133,7 @@ const Blog = () => {
                         {isInitial &&
                             <FeaturedPosts categories={categories} />
                         }
-                        <PostsGrid posts={posts} categories={categories} />
+                        <PostsGrid posts={posts} categories={categories} searchQuery={searchQuery} />
                         <PostsPagination currentPage={currentPage} pageCount={pageCount} onPageChange={handlePageChange} />
                     </>
                 }

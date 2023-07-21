@@ -9,8 +9,7 @@ const PostsGrid = ({ posts, searchQuery, categories }) => {
 
   const mediaDetails = usePlaceHolderMediaData(useWpSiteUrl(), 932);
 
-
-  if (!Array.isArray(posts) || posts.length === 0) {
+  if (!Array.isArray(posts) || posts.length === 0 || !posts) {
     const emptyMessage = searchQuery
       ? `No posts found for "${searchQuery}"`
       : 'No posts found';

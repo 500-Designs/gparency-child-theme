@@ -3,15 +3,15 @@
 // Register REST API endpoint for 'events' post type
 function gparency_get_events($request) {
     // Set a unique cache key based on the request parameters
-    // $cache_key = 'events_' . md5(serialize($request->get_params()));
+    $cache_key = 'events_' . md5(serialize($request->get_params()));
 
     // // Try to retrieve the cached response
-    // $cached_response = get_transient($cache_key);
+    $cached_response = get_transient($cache_key);
 
-    // if ($cached_response !== false) {
-    //     // If the response is cached, return it
-    //     return $cached_response;
-    // }
+    if ($cached_response !== false) {
+        // If the response is cached, return it
+        return $cached_response;
+    }
 
     $args = array(
         'post_type'      => 'events',
@@ -116,7 +116,7 @@ function gparency_get_events($request) {
     $response->header('X-WP-TotalPages', $total_pages);
 
     // Cache the response for 1 hour (you can adjust the duration as needed)
-    // set_transient($cache_key, $response, 15 * 60);
+    set_transient($cache_key, $response, 15 * 60);
 
     // Return the response
     return $response;
